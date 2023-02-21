@@ -2,7 +2,7 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-This project is an improvement of something I worked on for my final year project in college.
+This project is an improvement of something I worked on for my final year project in college. A social network for the students of Admiralty University of Nigeria.
 
 ## Goals
 
