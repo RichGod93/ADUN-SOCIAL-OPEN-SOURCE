@@ -1,7 +1,5 @@
 # ADUN Social
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 This project is an improvement of something I worked on for my final year project in college. A social network for the students of Admiralty University of Nigeria.
 
 ## Goals
@@ -12,6 +10,8 @@ This project is an improvement of something I worked on for my final year projec
 - I'm still working on this README so there will be more information here about this project with time.
 
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
