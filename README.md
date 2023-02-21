@@ -1,4 +1,15 @@
+# ADUN Social
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+This project is an improvement of something I worked on for my final year project in college.
+
+## Goals
+
+- The aim of this project is to enable students on campus to connect and interact with eachother online by sharing posts, reacting to the posts of peers by liking or commenting.
+- I'm making this project open source because I want to give room for growing developers in the school to contribute to the growth of this project and tailor it to their liking as well.
+- Also I want to have the experience of working with other developers on a project.
+- I'm still working on this README so there will be more information here about this project with time.
 
 ## Getting Started
 
@@ -36,3 +47,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Authors
+
+- **RichGod Usen** - [Profile](https://github.com/RichGod93)
+
+- **Relaxedleaf** - [Profile](https://github.com/relaxedleaf)
+
+## License
+
+This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
