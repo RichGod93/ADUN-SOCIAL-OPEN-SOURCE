@@ -1,3 +1,11 @@
+// Head Component
 import PageHead from "./PageHead";
 
-export { PageHead };
+// Landing page components
+import Hero from "./landingPage/Hero";
+
+export {
+    PageHead,
+
+    Hero
+};
