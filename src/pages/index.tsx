@@ -8,7 +8,7 @@ export default function LandingPage() {
   return (
     <>
       <PageHead title="ADUN Social" page_name={''} />
-      <main className="lg:px-32 bg-gradient-to-b from-transparent via-transparent to-[#526CFF]">
+      <main className="px-5 md:lg:px-32 bg-gradient-to-b light-gradient dark:dark-gradient">
         {/* Hero */}
         <Hero />
       </main>
