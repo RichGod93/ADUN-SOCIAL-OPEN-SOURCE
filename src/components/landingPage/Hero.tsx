@@ -9,27 +9,27 @@ const Hero = () => {
         >
             <div className="self-start pt-3 lg:pt-5"><Logo /></div>
             <div className="flex md:lg:flex-1 items-center justify-center mt-32 md:lg:mt-0">
-                <motion.div className="space-y-1 flex flex-col items-center"
+                <motion.div className="space-y-3 flex flex-col items-center"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
                         default: {
-                            duration: 0.3,
+                            duration: 0.2,
                             ease: [0, 0.71, 0.2, 1.01]
                         },
                         scale: {
                             type: "spring",
-                            damping: 5,
+                            damping: 7,
                             stiffness: 100,
                             restDelta: 0.001
                         }
                     }}
                 >
-                    <div>
+                    <div className="space-y-3">
                         <p className="font-semibold text-sm text-center primary-text-color uppercase">
                             24 hour access
                         </p>
-                        <p className="font-extrabold text-2xl md:lg:text-7xl text-center primary-text-color uppercase">
+                        <p className="font-extrabold text-6xl md:lg:text-7xl text-center primary-text-color uppercase">
                             stay updated<br />share your thoughts
                         </p>
 
@@ -41,7 +41,7 @@ const Hero = () => {
                     </div>
 
                     {/* Button */}
-                    <Link href="#">
+                    <Link href="../auth">
                         <motion.button
                             className="primary-bg-color secondary-text-color font-bold text-xs mt-2 py-3 px-4 rounded-sm flex items-center justify-between uppercase"
                             whileHover={{ scale: 1.2 }}
