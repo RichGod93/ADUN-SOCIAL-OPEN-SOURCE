@@ -6,10 +6,9 @@ const Hero = () => {
     return (
         <div
             className="h-screen flex flex-col"
-
         >
             <div className="self-start pt-3 lg:pt-5"><Logo /></div>
-            <div className="flex flex-1 items-center justify-center">
+            <div className="flex md:lg:flex-1 items-center justify-center mt-32 md:lg:mt-0">
                 <motion.div className="space-y-1 flex flex-col items-center"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -27,16 +26,16 @@ const Hero = () => {
                     }}
                 >
                     <div>
-                        <p className="font-semibold text-xs md:lg:text-sm text-center primary-text-color uppercase">
+                        <p className="font-semibold text-sm text-center primary-text-color uppercase">
                             24 hour access
                         </p>
-                        <p className="font-extrabold md:lg:text-7xl text-center primary-text-color uppercase">
+                        <p className="font-extrabold text-2xl md:lg:text-7xl text-center primary-text-color uppercase">
                             stay updated<br />share your thoughts
                         </p>
 
                     </div>
                     <div>
-                        <p className="text-center">
+                        <p className="text-center primary-text-color">
                             Change the way you utilize your time and the internet with this <br /> easy-to-use social network.
                         </p>
                     </div>
@@ -44,7 +43,7 @@ const Hero = () => {
                     {/* Button */}
                     <Link href="#">
                         <motion.button
-                            className="primary-bg-color dark:secondary-bg-color secondary-text-color dark:primary-text-color text-xs mt-2 py-3 px-4 rounded-sm flex items-center justify-between uppercase"
+                            className="primary-bg-color secondary-text-color font-bold text-xs mt-2 py-3 px-4 rounded-sm flex items-center justify-between uppercase"
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
                             transition={{ type: "spring", stiffness: 400, damping: 17 }}
