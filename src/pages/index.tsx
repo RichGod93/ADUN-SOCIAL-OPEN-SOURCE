@@ -1,16 +1,16 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import { PageHead } from '@/components';
+import { Hero, PageHead } from '@/components';
+import { motion } from "framer-motion";
 
-const inter = Inter({ subsets: ['latin'] });
 
 export default function LandingPage() {
   return (
     <>
       <PageHead title="ADUN Social" page_name={''} />
-      <main className='container h-screen w-screen flex items-center justify-center'>
-        <div className=''><p className='font-bold'>Hello ADUN</p></div>
+      <main className="lg:px-32 bg-gradient-to-b from-transparent via-transparent to-[#526CFF]">
+        {/* Hero */}
+        <Hero />
       </main>
     </>
   );
