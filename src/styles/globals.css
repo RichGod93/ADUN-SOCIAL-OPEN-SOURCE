@@ -64,14 +64,10 @@
     @apply from-[hsl(231,34%,11%)] via-[hsl(231,34%,11%)] to-black;
   }
 
-  .login-form-input {
-    @apply w-64 rounded-md outline-none text-[#444444] py-2 pl-2 pr-10 bg-[#dadada];
-  }
+  .signup-form-input,
+  .login-form-input,
   .forgot-password-form-input {
-    @apply w-72 sm:w-96 rounded-md outline-none text-[#444444] py-2 sm:py-4 pl-2 pr-10 bg-[#dadada];
-  }
-  .signup-form-input {
-    @apply w-72 sm:w-80 rounded-md outline-none text-[#444444] py-1 sm:py-2.5 pl-2 pr-10 bg-[#dadada];
+    @apply w-full p-4 placeholder-gray-400 text-gray-700 bg-white text-lg border-0 border-b-2 primary-border-color drop-shadow-[0_0_3px_rgba(0,0,0,0.15)];
   }
 
   .inputIcon {
