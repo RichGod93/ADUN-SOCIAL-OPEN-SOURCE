@@ -9,6 +9,7 @@
 }
 
 @layer components {
+  /* icon sizes */
   .icon-xs {
     @apply h-3 w-3;
   }
@@ -21,30 +22,48 @@
   .icon-large {
     @apply h-32 w-32;
   }
+
+  /* text colors */
   .primary-text-color {
-    @apply text-[hsl(231,34%,11%)];
+    @apply text-[hsl(231,34%,11%)] dark:text-[hsl(210,20%,98%)];
   }
   .secondary-text-color {
-    @apply text-[hsl(210,20%,98%)];
+    @apply text-[hsl(210,20%,98%)] dark:text-[hsl(231,34%,11%)];
   }
+
+  /* bg colors */
   .primary-bg-color {
-    @apply bg-[hsl(231,34%,11%)];
+    @apply bg-[hsl(231,34%,11%)] dark:bg-[hsl(210,20%,98%)];
   }
   .secondary-bg-color {
-    @apply bg-[hsl(210,20%,98%)];
+    @apply bg-[hsl(210,20%,98%)] dark:bg-[hsl(231,34%,11%)];
   }
-  .lighter-bg-color {
-    @apply bg-[hsl(231,34%,11%)];
-  }
+
+  /* border colors */
   .primary-border-color {
-    @apply border-b-[#191D34] dark:border-b-[hsl(210,20%,98%)];
+    @apply border-b-[hsl(231,34%,11%)] dark:border-b-[hsl(210,20%,98%)];
   }
   .secondary-border-color {
-    @apply border-b-[hsl(231,34%,11%)];
+    @apply border-b-[hsl(210,20%,98%)] dark:border-b-[hsl(231,34%,11%)];
   }
+
+  /* outline colors */
   .primary-outline-color {
-    @apply outline-[#191D34];
+    @apply outline-[hsl(231,34%,11%)] dark:outline-[hsl(210,20%,98%)];
   }
+  .secondary-outline-color {
+    @apply outline-[hsl(210,20%,98%)] dark:outline-[hsl(231,34%,11%)];
+  }
+
+  /* gradients */
+  .light-gradient {
+    @apply from-transparent via-transparent to-[#526CFF];
+  }
+
+  .dark-gradient {
+    @apply from-[hsl(231,34%,11%)] via-[hsl(231,34%,11%)] to-black;
+  }
+
   .login-form-input {
     @apply w-64 rounded-md outline-none text-[#444444] py-2 pl-2 pr-10 bg-[#dadada];
   }
