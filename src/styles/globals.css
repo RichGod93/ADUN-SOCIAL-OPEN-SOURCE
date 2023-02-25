@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Helvetica, sans-serif;
+  }
+}
+
+@layer components {
+  .icon-xs {
+    @apply h-3 w-3;
+  }
+  .icon-small {
+    @apply h-5 w-5;
+  }
+  .icon-medium {
+    @apply h-10 w-10;
+  }
+  .icon-large {
+    @apply h-32 w-32;
+  }
+  .primary-text-color {
+    @apply text-[hsl(231,34%,11%)];
+  }
+  .secondary-text-color {
+    @apply text-[hsl(210,20%,98%)];
+  }
+  .primary-bg-color {
+    @apply bg-[hsl(231,34%,11%)];
+  }
+  .secondary-bg-color {
+    @apply bg-[hsl(210,20%,98%)];
+  }
+  .lighter-bg-color {
+    @apply bg-[hsl(231,34%,11%)];
+  }
+  .primary-border-color {
+    @apply border-b-[#191D34] dark:border-b-[hsl(210,20%,98%)];
+  }
+  .secondary-border-color {
+    @apply border-b-[hsl(231,34%,11%)];
+  }
+  .primary-outline-color {
+    @apply outline-[#191D34];
+  }
+  .login-form-input {
+    @apply w-64 rounded-md outline-none text-[#444444] py-2 pl-2 pr-10 bg-[#dadada];
+  }
+  .forgot-password-form-input {
+    @apply w-72 sm:w-96 rounded-md outline-none text-[#444444] py-2 sm:py-4 pl-2 pr-10 bg-[#dadada];
+  }
+  .signup-form-input {
+    @apply w-72 sm:w-80 rounded-md outline-none text-[#444444] py-1 sm:py-2.5 pl-2 pr-10 bg-[#dadada];
+  }
+
+  .inputIcon {
+    @apply flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 rounded-xl cursor-pointer;
+  }
+}
