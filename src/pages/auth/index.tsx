@@ -18,6 +18,7 @@ const Login = () => {
         e.preventDefault();
         try {
             setUser(await appwrite.account.createEmailSession(email, password) as unknown as User);
+            router.push("../home");
         } catch (error) {
             console.log(error);
         }
