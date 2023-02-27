@@ -21,6 +21,7 @@ const SignUp = () => {
         try {
             await appwrite.account.create('unique()', email, password, name);
             setUser(await appwrite.account.createEmailSession(email, password) as unknown as User);
+            router.push("../home");
         } catch (error) {
             console.log(error);
         }
