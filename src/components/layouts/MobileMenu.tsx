@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { appwrite } from "config/appwriteConfig";
 import { useRouter } from "next/router";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MobileMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,11 +21,15 @@ const MobileMenu = () => {
         setIsOpen(!isOpen);
     };
 
-    const logout = async () => {
-        await appwrite.account.deleteSession('current');
-        window.localStorage.removeItem("jwt");
-        window.localStorage.removeItem("jwt_expire");
-        router.push("../auth/");
+    const logout = async (e: FormEvent<EventTarget>) => {
+        e.preventDefault();
+        try {
+            await appwrite.account.deleteSession('current');
+            router.push("../auth/");
+        } catch (error: any) {
+            toast.error(`${error.message}`);
+        }
+
     };
 
     return (
