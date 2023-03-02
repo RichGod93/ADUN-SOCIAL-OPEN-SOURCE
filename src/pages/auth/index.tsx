@@ -1,10 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import type { FormEvent } from 'react';
 import { useRouter } from "next/router";
 import { PageHead } from "@/components";
 import { appwrite } from "config/appwriteConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -17,8 +18,8 @@ const Login = () => {
         try {
             await appwrite.account.createEmailSession(email, password);
             router.push("../home");
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            toast.error(`${error.message}`);
         }
     };
 
@@ -39,7 +40,7 @@ const Login = () => {
                             <label className="block mt-6 primary-text-color">Email</label>
                             <input
                                 className="login-form-input"
-                                placeholder="Email"
+                                placeholder="@example.com"
                                 type="text"
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -51,7 +52,7 @@ const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <div className="mt-4 self-end">
-                                <Link href="#" className="primary-text-color cursor-pointer underline">
+                                <Link href="../../auth/forgotpassword" className="primary-text-color cursor-pointer underline">
                                     Forgot password?
                                 </Link>
                             </div>
@@ -71,6 +72,18 @@ const Login = () => {
                     </div>
                 </section>
             </main>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </>
     );
 };
