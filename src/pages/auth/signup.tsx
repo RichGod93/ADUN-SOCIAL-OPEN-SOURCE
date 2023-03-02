@@ -3,9 +3,8 @@ import Image from "next/image";
 import { useState } from "react";
 import type { FormEvent } from 'react';
 import { useRouter } from "next/router";
-import { appwrite, userState } from "config/appwriteConfig";
-import { User } from "config/types";
-import { useRecoilState } from 'recoil';
+import { appwrite } from "config/appwriteConfig";
+import { ID } from "appwrite";
 
 import { PageHead } from "@/components";
 
@@ -13,14 +12,16 @@ const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useRecoilState(userState);
     const router = useRouter();
 
     const signup = async (e: FormEvent<EventTarget>) => {
         e.preventDefault();
         try {
-            await appwrite.account.create('unique()', email, password, name);
-            setUser(await appwrite.account.createEmailSession(email, password) as unknown as User);
+            await appwrite.account.create(ID.unique(), email, password, name);
+            await appwrite.account.createEmailSession(email, password);
+
+            await appwrite.account.createVerification("http://localhost:3000/home");
+            alert("Verification email has been sent!");
             router.push("../home");
         } catch (error) {
             console.log(error);
