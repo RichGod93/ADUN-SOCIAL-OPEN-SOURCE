@@ -4,20 +4,18 @@ import { useState } from "react";
 import type { FormEvent } from 'react';
 import { useRouter } from "next/router";
 import { PageHead } from "@/components";
-import { useRecoilState } from "recoil";
-import { appwrite, userState } from "config/appwriteConfig";
-import { User } from "config/types";
+import { appwrite } from "config/appwriteConfig";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useRecoilState(userState);
+
     const router = useRouter();
 
     const login = async (e: FormEvent<EventTarget>) => {
         e.preventDefault();
         try {
-            setUser(await appwrite.account.createEmailSession(email, password) as unknown as User);
+            await appwrite.account.createEmailSession(email, password);
             router.push("../home");
         } catch (error) {
             console.log(error);
