@@ -37,7 +37,7 @@ const NavBar = () => {
                 <UserCircleIcon className="hidden lg:block icon-medium primary-text-color" />
                 <button
                     onClick={logout}
-                    className="block w-full px-4 py-2 text-sm secondary-text-color primary-bg-color"
+                    className="hidden lg:block w-full px-4 py-2 text-sm secondary-text-color primary-bg-color"
                 >
                     Logout 👋
                 </button>
