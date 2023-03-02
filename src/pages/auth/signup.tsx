@@ -1,10 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import type { FormEvent } from 'react';
 import { useRouter } from "next/router";
 import { appwrite } from "config/appwriteConfig";
 import { ID } from "appwrite";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { PageHead } from "@/components";
 
@@ -21,10 +22,10 @@ const SignUp = () => {
             await appwrite.account.createEmailSession(email, password);
 
             await appwrite.account.createVerification("http://localhost:3000/home");
-            alert("Verification email has been sent!");
+            toast.success("Verification email has been sent!");
             router.push("../home");
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            toast.error(`${error.message}`);
         }
     };
 
@@ -53,7 +54,7 @@ const SignUp = () => {
                             <label className="block mt-6 primary-text-color">Email</label>
                             <input
                                 className="signup-form-input"
-                                placeholder="Email"
+                                placeholder="@example.com"
                                 type="text"
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -64,6 +65,9 @@ const SignUp = () => {
                                 type="password"
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            <p className="mt-4 primary-text-color">
+                                Do not forget your password 🙏
+                            </p>
 
                             <div className="mt-6">
                                 <button
@@ -79,6 +83,18 @@ const SignUp = () => {
                     </div>
                 </section>
             </main>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </>
     );
 };
