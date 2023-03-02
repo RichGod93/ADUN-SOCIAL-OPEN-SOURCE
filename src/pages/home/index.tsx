@@ -4,6 +4,8 @@ import type { NextPageWithLayout } from '../../pages/_app';
 import { appwrite } from 'config/appwriteConfig';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const HomePage: NextPageWithLayout = () => {
@@ -12,10 +14,11 @@ const HomePage: NextPageWithLayout = () => {
     const verifyUser = (userId: string, secret: string) => {
         appwrite.account.updateVerification(userId, secret)
             .then(() => {
-                alert('User is verified');
+                toast.success('Account verified');
                 router.push('../home');
             })
-            .catch((error) => {
+            .catch((error: any) => {
+                toast.error(`${error.message}`);
                 console.log(error);
             });
     };
@@ -27,10 +30,18 @@ const HomePage: NextPageWithLayout = () => {
 
         if (userId && secret) {
             verifyUser(userId, secret);
-        } else {
-            console.log("User ID or secret missing");
         }
     }, []);
+
+    async function getStatus() {
+        const data = await appwrite.account.get();
+
+        if (data.status == true) {
+            console.log('true');
+        } else {
+            console.log('false');
+        }
+    }
 
     return (
         <div>
