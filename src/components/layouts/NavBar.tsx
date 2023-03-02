@@ -1,20 +1,27 @@
-import Link from 'next/link';
+import { FormEvent } from 'react';
 import Logo from '../landingPage/Logo';
 import { HomeIcon, ChatBubbleLeftRightIcon, UserIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-import MobileMenu from './MobileMenu';
 import { appwrite } from 'config/appwriteConfig';
 import { useRouter } from 'next/router';
+
+import MobileMenu from './MobileMenu';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const NavBar = () => {
     const router = useRouter();
 
+    const logout = async (e: FormEvent<EventTarget>) => {
+        e.preventDefault();
+        try {
+            await appwrite.account.deleteSession('current');
+            router.push("../auth/");
+        } catch (error: any) {
+            toast.error(`${error.message}`);
+        }
 
-    const logout = async () => {
-        await appwrite.account.deleteSession('current');
-        window.localStorage.removeItem("jwt");
-        window.localStorage.removeItem("jwt_expire");
-        router.push("../auth/");
     };
 
     return (
