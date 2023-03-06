@@ -1,12 +1,10 @@
 # ADUN Social
 
 A social network for the students of Admiralty University of Nigeria.
-This project is an improvement of something I worked on for my final year project in college.
-
 ## Goals
 
+- This project is open source because I want to give room for growing developers in Admiralty University of Nigeria to contribute to the growth of this project and tailor it to their liking as well.
 - The aim of this project is to enable students on campus to connect and interact with eachother online by sharing posts, reacting to the posts of peers by liking or commenting.
-- I'm making this project open source because I want to give room for growing developers in the school to contribute to the growth of this project and tailor it to their liking as well.
 - Right now, I need help getting the front end aspect of this project up.
 - With time, the functionalities will be looked into using Appwrite.
 - Also I want to have the experience of working with other developers on a project.
