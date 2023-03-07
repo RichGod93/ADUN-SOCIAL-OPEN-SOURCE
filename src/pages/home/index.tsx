@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { Layout } from '@/components';
+import { CreatePost, Layout } from '@/components';
 import type { NextPageWithLayout } from '../../pages/_app';
 import { appwrite } from 'config/appwriteConfig';
 import { useRouter } from 'next/router';
@@ -44,7 +44,8 @@ const HomePage: NextPageWithLayout = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col items-center">
+            <div className="mt-3"><CreatePost /></div>
 
         </div>
     );
