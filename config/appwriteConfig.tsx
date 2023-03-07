@@ -8,6 +8,6 @@ export const Server = {
 export const client = new Appwrite().setEndpoint(Server.endpoint).setProject(Server.project);
 
 const account = new Account(client);
-// const database = new Databases(client, Server.databaseID);
+const databases = new Databases(client);
 
-export const appwrite = { account };
+export const appwrite = { account, databases };
