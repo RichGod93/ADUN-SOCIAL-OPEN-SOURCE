@@ -1,25 +1,44 @@
-import { ChangeEvent, useState } from "react";
-import { appwrite } from "config/appwriteConfig";
+import { ChangeEvent, useRef, useState } from "react";
 import { UserCircleIcon, PhotoIcon } from "@heroicons/react/24/solid";
+
+interface FormFields {
+    title: string;
+    description: string;
+    image: File | null;
+    created_at: number;
+}
 
 
 const CreatePost = () => {
-    const [formData, setFormData] = useState({
+    const filepickerRef = useRef<any>(null);
+
+    const [formData, setFormData] = useState<FormFields>({
         title: "",
         description: "",
-        image: "",
-        // add created at
+        image: null,
+        created_at: Math.floor(Date.now() / 1000),
     });
 
     const [loading, setLoading] = useState(false);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        setFormData({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value
-        });
+        }));
     };
+
+    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files) {
+            setFormData({ ...formData, image: event.target.files[0] });
+        }
+    };
+
+    const removeImage = () => {
+        setFormData({ ...formData, image: null });
+    };
+
 
     return (
         <div className="flex border primary-border-round-color w-[300px] p-2 md:w-[600px] md:p-3 lg:w-[600px] lg:p-3 space-x-2">
@@ -45,7 +64,29 @@ const CreatePost = () => {
 
                 <div className="flex justify-end mt-2 border-t primary-border-t-color">
                     <div className="flex items-center mt-2 space-x-2">
-                        <PhotoIcon className="icon-small md:icon-medium lg:icon-medium primary-text-color cursor-pointer" />
+                        <div className="flex items-center space-x-1">
+                            {formData.image && (
+                                <div onClick={removeImage}>
+                                    <p className="text-xs text-red-500 text-center cursor-pointer">
+                                        Remove <br />
+                                        Image
+                                    </p>
+                                </div>
+                            )}
+                            <div onClick={() => filepickerRef.current.click()}>
+                                <PhotoIcon className="icon-small md:icon-medium lg:icon-medium primary-text-color cursor-pointer" />
+                                <input
+                                    ref={filepickerRef}
+                                    type="file"
+                                    name="image"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    hidden
+                                />
+                            </div>
+
+                        </div>
+
                         <button
                             type="submit"
                             className="py-1 px-3 md:py-2 md:px-10 lg:py-2 lg:px-10 font-semibold text-sm md:text-base lg:text-base uppercase rounded-sm shadow-md primary-bg-color 
