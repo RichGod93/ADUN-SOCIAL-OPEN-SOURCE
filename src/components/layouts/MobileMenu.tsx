@@ -33,7 +33,7 @@ const MobileMenu = () => {
     };
 
     return (
-        <div className="relative lg:hidden">
+        <div className="relative md:hidden lg:hidden">
             <button
                 className="px-4 py-1 secondary-text-color primary-bg-color rounded-sm"
                 onClick={toggleMenu}
