@@ -1,5 +1,9 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { UserCircleIcon, PhotoIcon } from "@heroicons/react/24/solid";
+import { appwrite, APPWRITE_DATABASE_ID, POST_COLLECTION_ID, } from "config/appwriteConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ID } from "appwrite";
 
 interface FormFields {
     title: string;
@@ -8,15 +12,36 @@ interface FormFields {
     created_at: number;
 }
 
+interface UserDetails {
+    $id: string;
+    name: string;
+    email: string;
+}
+
 
 const CreatePost = () => {
     const filepickerRef = useRef<any>(null);
+    const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
+
+
+    useEffect(() => {
+        const getData = appwrite.account.get();
+        getData.then(
+            (response) => {
+                setUserDetails(response);
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, []);
 
     const [formData, setFormData] = useState<FormFields>({
         title: "",
         description: "",
         image: null,
-        created_at: Math.floor(Date.now() / 1000),
+        created_at: Date.now(),
     });
 
     const [loading, setLoading] = useState(false);
@@ -39,11 +64,59 @@ const CreatePost = () => {
         setFormData({ ...formData, image: null });
     };
 
+    const resetForm = () => {
+        setFormData({
+            title: "",
+            description: "",
+            image: null,
+            created_at: 0,
+        });
+        if (filepickerRef.current) {
+            filepickerRef.current.value = "";
+        }
+    };
+
+
+
+    const createNewPost = async (event: FormEvent<EventTarget>) => {
+        event.preventDefault();
+
+        if (!formData.title || !formData.description) {
+            toast.error("Please fill all the fields");
+            return;
+        }
+        if (formData.image) {
+            // create the post and store image to storage
+            setLoading(true);
+            // resetForm();
+        } else {
+            try {
+                await appwrite.databases.createDocument(APPWRITE_DATABASE_ID, POST_COLLECTION_ID, ID.unique(), {
+                    author: userDetails?.name,
+                    author_id: userDetails?.$id,
+                    title: formData.title,
+                    description: formData.description,
+                    created_at: formData.created_at
+                });
+                toast.success("Post created!");
+                resetForm();
+
+                // console.log(response);
+            } catch (error) {
+                toast.error("Error creating post", error!);
+                console.log(error);
+            }
+
+        }
+
+
+    };
+
 
     return (
         <div className="flex border primary-border-round-color w-[300px] p-2 md:w-[600px] md:p-3 lg:w-[600px] lg:p-3 space-x-2">
             <UserCircleIcon className="icon-small md:icon-medium lg:icon-medium primary-text-color" />
-            <form className="flex-1">
+            <form className="flex-1" onSubmit={createNewPost}>
                 <div className="flex flex-col space-y-2">
                     <input
                         type="text"
@@ -97,7 +170,6 @@ const CreatePost = () => {
                                 !formData.description ||
                                 loading
                             }
-                            onClick={(e) => { e.preventDefault(); console.log(formData); }}
                         >
                             {loading ? (<p>POSTING</p>) : (<p>POST</p>)}
                         </button>
@@ -106,6 +178,18 @@ const CreatePost = () => {
                 </div>
 
             </form>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     );
 };
