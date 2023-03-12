@@ -9,6 +9,9 @@ import Logo from "./landingPage/Logo";
 import Layout from "./layouts/Layout";
 import NavBar from "./layouts/NavBar";
 
+// Home page components
+import CreatePost from "./post/CreatePost";
+
 export {
     PageHead,
 
@@ -16,5 +19,7 @@ export {
     Logo,
 
     Layout,
-    NavBar
+    NavBar,
+
+    CreatePost
 };

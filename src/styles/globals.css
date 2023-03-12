@@ -40,11 +40,25 @@
   }
 
   /* border colors */
-  .primary-border-color {
+  .primary-border-b-color {
     @apply border-b-[hsl(231,34%,11%)] dark:border-b-[hsl(210,20%,98%)];
   }
-  .secondary-border-color {
+  .secondary-border-b-color {
     @apply border-b-[hsl(210,20%,98%)] dark:border-b-[hsl(231,34%,11%)];
+  }
+
+  .primary-border-t-color {
+    @apply border-t-[hsl(231,34%,11%)] dark:border-t-[hsl(210,20%,98%)];
+  }
+  .secondary-border-t-color {
+    @apply border-t-[hsl(210,20%,98%)] dark:border-t-[hsl(231,34%,11%)];
+  }
+
+  .primary-border-round-color {
+    @apply border-[hsl(231,34%,11%)] dark:border-[hsl(210,20%,98%)];
+  }
+  .secondary-border-round-color {
+    @apply border-[hsl(210,20%,98%)] dark:border-[hsl(231,34%,11%)];
   }
 
   /* outline colors */
@@ -67,7 +81,7 @@
   .signup-form-input,
   .login-form-input,
   .forgot-password-form-input {
-    @apply w-full p-4 placeholder-gray-400 text-gray-700 bg-white text-lg border-0 border-b-2 primary-border-color drop-shadow-[0_0_3px_rgba(0,0,0,0.15)];
+    @apply w-full p-4 placeholder-gray-400 text-gray-700 bg-white text-lg border-0 border-b-2 primary-border-b-color drop-shadow-[0_0_3px_rgba(0,0,0,0.15)];
   }
 
   .inputIcon {

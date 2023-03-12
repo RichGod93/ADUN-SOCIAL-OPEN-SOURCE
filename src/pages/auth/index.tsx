@@ -1,28 +1,21 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import type { FormEvent } from 'react';
-import { useRouter } from "next/router";
 import { PageHead } from "@/components";
-import { appwrite } from "config/appwriteConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AppContext } from "@/context/AppContextProvider";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const router = useRouter();
+    const { login } = useContext(AppContext);
 
-    const login = async (e: FormEvent<EventTarget>) => {
-        e.preventDefault();
-        try {
-            await appwrite.account.createEmailSession(email, password);
-            router.push("../home");
-        } catch (error: any) {
-            toast.error(`${error.message}`);
-        }
+    const handleLogin = async (event: FormEvent<EventTarget>) => {
+        event.preventDefault();
+        await login(email, password);
     };
-
 
     return (
         <>
@@ -36,7 +29,7 @@ const Login = () => {
                                 Sign Up
                             </Link>
                         </p>
-                        <form className="flex flex-col" onSubmit={login}>
+                        <form className="flex flex-col" onSubmit={handleLogin}>
                             <label className="block mt-6 primary-text-color">Email</label>
                             <input
                                 className="login-form-input"
