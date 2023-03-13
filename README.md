@@ -1,5 +1,7 @@
 # ADUN Social
 
+![Landing page screenshot](https://github.com/RichGod93/ADUN-SOCIAL-OPEN-SOURCE/blob/master/public/static/landing%20page.png)
+
 A social network for the students of Admiralty University of Nigeria.
 
 ## Goals 📍
