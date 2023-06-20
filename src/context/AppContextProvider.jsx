@@ -8,7 +8,7 @@ import {
     sendEmailVerification,
     getIdTokenResult,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../../config/firebaseConfig";
 
 const AuthContext = createContext({
     currentUser: null,
@@ -28,10 +28,6 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-
-            getIdTokenResult(user).then((idTokenResult) => {
-                user.admin = idTokenResult.claims.admin;
-            });
         });
 
         return () => {

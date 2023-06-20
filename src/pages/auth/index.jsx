@@ -4,13 +4,13 @@ import { useState, useContext } from "react";
 import { PageHead } from "@/components";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AppContext } from "@/context/AppContextProvider";
+import { useAuth } from "@/context/AppContextProvider";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login } = useContext(AppContext);
+    const { login } = useAuth();
 
     const handleLogin = async (event) => {
         event.preventDefault();

@@ -1,5 +1,6 @@
+import { updateEmail, updateProfile } from "firebase/auth";
 import { useState } from "react";
-import { appwrite } from "../../config/firebaseConfig";
+import { auth } from "../../config/firebaseConfig";
 
 export const useUpdateUserData = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,10 +11,10 @@ export const useUpdateUserData = () => {
         setIsLoading(true);
 
         try {
-            const nameUpdate = await appwrite.account.updateName({
-                name: data.name,
+            const nameUpdate = await updateProfile(auth.currentUser, {
+                displayName: data.name
             });
-            const emailUpdate = await appwrite.account.updateEmail({ email: data.email });
+            const emailUpdate = await updateEmail(auth.currentUser, data.email);
 
             setIsLoading(false);
             setSuccess(true);

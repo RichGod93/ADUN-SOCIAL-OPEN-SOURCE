@@ -3,10 +3,6 @@ import { useUpdateUserData } from "@/hooks/useUpdateUserData";
 import { useUserData } from "@/hooks/useUserData";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useState } from "react";
-import {
-    PROFILE_IMAGE_BUCKET_ID,
-    appwrite,
-} from "../../../config/firebaseConfig";
 import { ID } from "appwrite";
 import { useProfilePicture } from "@/hooks/useProfilePicture";
 import Image from "next/image";
