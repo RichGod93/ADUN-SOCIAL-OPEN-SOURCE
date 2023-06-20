@@ -5,6 +5,6 @@ const nextConfig = {
 
 module.exports = {
   images: {
-    domains: ["localhost"]
-  }
+    domains: ["bit.ly", "firebasestorage.googleapis.com"],
+  },
 }, nextConfig;

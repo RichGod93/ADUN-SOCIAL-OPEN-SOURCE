@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import { appwrite } from "../../../config/firebaseConfig";
+import { db } from "../../../config/firebaseConfig";
 import { useRouter } from "next/router";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { collection } from "firebase/firestore";
+import { useAuth } from "@/context/AppContextProvider";
 
 const MobileMenu = () => {
+    const { logout } = useAuth();
+    const userState = collection(db, "state");
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
 
@@ -21,13 +25,15 @@ const MobileMenu = () => {
         setIsOpen(!isOpen);
     };
 
-    const logout = async (event) => {
-        event.preventDefault();
+    const handleLogout = async () => {
         try {
-            await appwrite.account.deleteSession('current');
-            router.push("../auth/");
-        } catch (error) {
-            toast.error(`${error.message}`);
+            logout;
+            router.push("../auth");
+            await updateDoc(doc(userState, auth.currentUser.uid), {
+                isOnline: false,
+            });
+        } catch {
+            toast.error("Failed to log out");
         }
 
     };
@@ -56,7 +62,7 @@ const MobileMenu = () => {
                     </a>
                 ))}
                 <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="block w-full px-4 py-2 text-sm secondary-text-color hover:primary-text-color text-left hover:secondary-bg-color"
                 >
                     Logout 👋
