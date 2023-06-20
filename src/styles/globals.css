@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Helvetica, sans-serif;
+  }
+}
+
+@layer components {
+  /* icon sizes */
+  .icon-xs {
+    @apply h-3 w-3;
+  }
+  .icon-small {
+    @apply h-5 w-5;
+  }
+  .icon-medium {
+    @apply h-10 w-10;
+  }
+  .icon-large {
+    @apply h-32 w-32;
+  }
+
+  /* text colors */
+  .primary-text-color {
+    @apply text-[hsl(231,34%,11%)] dark:text-[hsl(210,20%,98%)];
+  }
+  .secondary-text-color {
+    @apply text-[hsl(210,20%,98%)] dark:text-[hsl(231,34%,11%)];
+  }
+
+  /* bg colors */
+  .primary-bg-color {
+    @apply bg-[hsl(231,34%,11%)] dark:bg-[hsl(210,20%,98%)];
+  }
+  .secondary-bg-color {
+    @apply bg-[hsl(210,20%,98%)] dark:bg-[hsl(231,34%,11%)];
+  }
+
+  /* border colors */
+  .primary-border-b-color {
+    @apply border-b-[hsl(231,34%,11%)] dark:border-b-[hsl(210,20%,98%)];
+  }
+  .secondary-border-b-color {
+    @apply border-b-[hsl(210,20%,98%)] dark:border-b-[hsl(231,34%,11%)];
+  }
+
+  .primary-border-t-color {
+    @apply border-t-[hsl(231,34%,11%)] dark:border-t-[hsl(210,20%,98%)];
+  }
+  .secondary-border-t-color {
+    @apply border-t-[hsl(210,20%,98%)] dark:border-t-[hsl(231,34%,11%)];
+  }
+
+  .primary-border-round-color {
+    @apply border-[hsl(231,34%,11%)] dark:border-[hsl(210,20%,98%)];
+  }
+  .secondary-border-round-color {
+    @apply border-[hsl(210,20%,98%)] dark:border-[hsl(231,34%,11%)];
+  }
+
+  /* outline colors */
+  .primary-outline-color {
+    @apply outline-[hsl(231,34%,11%)] dark:outline-[hsl(210,20%,98%)];
+  }
+  .secondary-outline-color {
+    @apply outline-[hsl(210,20%,98%)] dark:outline-[hsl(231,34%,11%)];
+  }
+
+  /* gradients */
+  .light-gradient {
+    @apply from-transparent via-transparent to-[#526CFF];
+  }
+
+  .dark-gradient {
+    @apply from-[hsl(231,34%,11%)] via-[hsl(231,34%,11%)] to-black;
+  }
+
+  .signup-form-input,
+  .login-form-input,
+  .forgot-password-form-input {
+    @apply w-full p-4 placeholder-gray-400 text-gray-700 bg-white text-lg border-0 border-b-2 primary-border-b-color drop-shadow-[0_0_3px_rgba(0,0,0,0.15)];
+  }
+
+  .inputIcon {
+    @apply flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 rounded-xl cursor-pointer;
+  }
+}

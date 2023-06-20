@@ -1,0 +1,27 @@
+{
+  "name": "adun-social-js",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.0.17",
+    "appwrite": "^10.2.0",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.3.5",
+    "eslint": "8.38.0",
+    "eslint-config-next": "13.3.0",
+    "framer-motion": "^10.11.5",
+    "next": "13.3.0",
+    "node-appwrite": "^8.2.0",
+    "postcss": "8.4.21",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-toastify": "^9.1.2",
+    "tailwindcss": "3.3.1"
+  }
+}
