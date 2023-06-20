@@ -1,21 +1,28 @@
 import Link from "next/link";
 import { useState } from "react";
-import { appwrite } from "../../../config/firebaseConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { PageHead } from "@/components";
+import { useAuth } from "@/context/AppContextProvider";
 
 const ForgotPassword = () => {
+    const { forgotPassword } = useAuth();
+
     const [email, setEmail] = useState("");
 
-    const forgotPassword = async () => {
-        try {
-            await appwrite.account.createRecovery(email, "http://localhost:3000/auth/resetpassword");
-            toast.success('Email has been sent');
-        } catch (error) {
-            toast.error(`${error.message}`);
-        }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        forgotPassword(email)
+            .then((response) => {
+                toast.success("Password reset email sent, check your email");
+                console.log(response);
+            })
+            .catch((error) => {
+                toast.error("Password reset email not sent, try again");
+                console.log(error);
+            });
     };
 
 
@@ -32,7 +39,7 @@ const ForgotPassword = () => {
                                 Login
                             </Link>
                         </p>
-                        <form className="flex flex-col" onSubmit={forgotPassword}>
+                        <form className="flex flex-col" onSubmit={handleSubmit}>
                             <label className="block mt-6 primary-text-color">Email</label>
                             <input
                                 className="login-form-input"

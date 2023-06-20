@@ -11,21 +11,28 @@ import MobileMenu from "./MobileMenu";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AppContext } from "@/context/AppContextProvider";
-import { appwrite } from "../../../config/firebaseConfig";
+import { useAuth } from "@/context/AppContextProvider";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../../config/firebaseConfig";
 
 const NavBar = () => {
+    const { logout } = useAuth();
+    const userState = collection(db, "state");
     const router = useRouter();
 
-    const logout = async () => {
+    const handleLogout = async () => {
         try {
-            await appwrite.account.deleteSession("current");
+            logout;
             router.push("../auth");
-        } catch (error) {
-            console.error(error);
+            await updateDoc(doc(userState, auth.currentUser.uid), {
+                isOnline: false,
+            });
+        } catch {
+            toast.error("Failed to log out");
         }
+
     };
 
     return (
@@ -55,7 +62,7 @@ const NavBar = () => {
             <div className="flex items-center space-x-1">
                 <UserCircleIcon className="hidden md:block lg:block icon-medium primary-text-color" />
                 <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="hidden md:block lg:block w-full px-4 py-2 text-sm secondary-text-color primary-bg-color"
                 >
                     Logout 👋

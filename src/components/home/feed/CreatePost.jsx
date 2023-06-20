@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { UserCircleIcon, PhotoIcon } from "@heroicons/react/24/solid";
-import { APPWRITE_DATABASE_ID, POST_COLLECTION_ID, POST_IMAGE_BUCKET_ID, appwrite, } from "../../../../config/firebaseConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ID } from "appwrite";
 import Image from "next/image";
 
 
@@ -13,16 +11,7 @@ const CreatePost = () => {
 
 
     useEffect(() => {
-        const getData = appwrite.account.get();
-        getData.then(
-            (response) => {
-                setUserDetails(response);
-            }
-        ).catch(
-            (error) => {
-                console.log(error);
-            }
-        );
+
     }, []);
 
     const [formData, setFormData] = useState({

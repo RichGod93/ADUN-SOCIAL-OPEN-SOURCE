@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
     async function forgotPassword(email) {
         try {
             await sendPasswordResetEmail(auth, email, {
-                url: "https://adun-social.vercel.app/authentication/",
+                url: "http://localhost:3000",
             });
         } catch (err) {
             console.log(err);

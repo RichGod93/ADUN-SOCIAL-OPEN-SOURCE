@@ -1,20 +1,49 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { PageHead } from "@/components";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "@/context/AppContextProvider";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../../config/firebaseConfig";
+import { useRouter } from "next/router";
+import useMounted from "@/hooks/useMounted";
 
 const Login = () => {
+    const { login } = useAuth();
+    const router = useRouter();
+    const mounted = useMounted();
+
+    const userState = collection(db, "state");
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { login } = useAuth();
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        await login(email, password);
+
+        if (!email || !password) {
+            toast.error("Please fill in all fields");
+        }
+
+        setIsSubmitting(isSubmitting, true);
+
+        login(email, password).then(async () => {
+            updateDoc(doc(userState, auth.currentUser.uid), {
+                isOnline: true,
+            });
+            router.push("../home/");
+        }).catch((error) => {
+            router.push("../auth/");
+            toast.error(`${error.message} try again`);
+        }).finally(() => {
+            () => mounted.current && setIsSubmitting(false);
+        });
+        setEmail("");
+        setPassword("");
     };
 
     return (

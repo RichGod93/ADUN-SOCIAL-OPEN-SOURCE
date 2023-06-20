@@ -1,31 +1,22 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { appwrite } from "../../../config/firebaseConfig";
-import { ID } from "appwrite";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { PageHead } from "@/components";
+import { useAuth } from "@/context/AppContextProvider";
 
 const SignUp = () => {
+    const { signup } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const signup = async (event) => {
+    const handleSignup = async (event) => {
         event.preventDefault();
-        try {
-            await appwrite.account.create(ID.unique(), email, password, name);
-            await appwrite.account.createEmailSession(email, password);
-
-            await appwrite.account.createVerification("http://localhost:3000/home");
-            toast.success("Verification email has been sent!");
-            router.push("../home");
-        } catch (error) {
-            toast.error(`${error.message}`);
-        }
+        signup(email, password);
     };
 
     return (
@@ -41,7 +32,7 @@ const SignUp = () => {
                                 Login
                             </Link>
                         </p>
-                        <form onSubmit={signup}>
+                        <form onSubmit={handleSignup}>
                             <label className="block mt-6 primary-text-color">Name</label>
                             <input
                                 className="signup-form-input"
