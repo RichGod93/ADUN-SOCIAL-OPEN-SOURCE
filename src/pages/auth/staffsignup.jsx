@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { setDoc, doc, collection } from "firebase/firestore";
+import { setDoc, doc, collection, getDoc } from "firebase/firestore";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,8 @@ import useMounted from "@/hooks/useMounted";
 const SignUp = () => {
     const { signup } = useAuth();
 
-    const [photo, setPhoto] = useState("/avatar.png");
+    const [photo, setPhoto] = useState(null);
+    const [photoURL, setPhotoURL] = useState("/avatar.png");
     const [loading, setLoading] = useState(false);
 
     // Collection references
@@ -23,7 +24,6 @@ const SignUp = () => {
     const userType = collection(db, "user_type");
     const userState = collection(db, "state");
     const userFacultyCol = collection(db, "faculties");
-    const userDepartmentCol = collection(db, "departments");
 
     // This function removes the select options
     const removeAllSelectOptions = (selectBox) => {
@@ -60,10 +60,9 @@ const SignUp = () => {
     const [data, setData] = useState({
         first: "",
         last: "",
-        matric: "",
+        id: "",
         faculty: "",
         department: "",
-        programme: "",
         email: "",
         password: "",
         error: null,
@@ -72,17 +71,7 @@ const SignUp = () => {
 
     const router = useRouter();
 
-    const {
-        first,
-        last,
-        matric,
-        faculty,
-        department,
-        programme,
-        email,
-        password,
-        error,
-    } = data;
+    const { first, last, id, department, faculty, email, password, error } = data;
 
     function getAndSetNames() {
         updateProfile(auth.currentUser, {
@@ -110,14 +99,12 @@ const SignUp = () => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
 
-    const handleStudentSelectChange = async (e) => {
+    async function handleStaffSelectChange(e) {
         setData({ ...data, [e.target.name]: e.target.value });
         if (e.target.name === "faculty") {
             getSelectOptions(userFacultyCol, e, "departments", "Department");
-        } else if (e.target.name === "department") {
-            getSelectOptions(userDepartmentCol, e, "programmes", "Programme");
         }
-    };
+    }
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -127,10 +114,9 @@ const SignUp = () => {
         if (
             !first ||
             !last ||
-            !matric ||
+            !id ||
             !faculty ||
             !department ||
-            !programme ||
             !email ||
             !password
         ) {
@@ -147,14 +133,13 @@ const SignUp = () => {
                         uid: auth.currentUser.uid,
                         first,
                         last,
-                        matric,
+                        id,
                         faculty,
                         department,
-                        programme,
                         email,
-                        createdAt: Timestamp.fromdate(new Date()),
+                        createdAt: Timestamp.fromDate(new Date()),
                     },
-                    setDoc(doc(userType, auth.currentUser.uid), { type: "student" }),
+                    setDoc(doc(userType, auth.currentUser.uid), { type: "staff" }),
                     setDoc(doc(userState, auth.currentUser.uid), {
                         isOnline: true,
                     })
@@ -166,6 +151,7 @@ const SignUp = () => {
                 router.push("../home");
             })
             .catch((err) => {
+                // toast.error(`${err.message} try again`);
                 console.log(err.message);
             })
             .finally(() => {
@@ -176,10 +162,9 @@ const SignUp = () => {
         setData({
             first: "",
             last: "",
-            matric: "",
+            id: "",
             faculty: "",
             department: "",
-            programme: "",
             email: "",
             password: "",
             error: null,
@@ -194,11 +179,22 @@ const SignUp = () => {
             <main className="px-5 md:lg:px-32 bg-gradient-to-b light-gradient dark:dark-gradient">
                 <section className="container h-full mx-auto flex">
                     <div className="flex-grow flex flex-col max-w-xl justify-center p-6">
-                        <h1 className="text-6xl font-bold primary-text-color">Sign Up</h1>
+                        <h1 className="text-5xl font-bold primary-text-color">
+                            Staff Sign Up
+                        </h1>
                         <p className="mt-4 primary-text-color">
                             Already have an account?{" "}
-                            <Link href="../auth" className="cursor-pointer underline">
+                            <Link href="../auth/login" className="cursor-pointer underline">
                                 Login
+                            </Link>
+                        </p>
+                        <p className="mt-4 primary-text-color">
+                            Don&apos;t want to sign up as staff?{" "}
+                            <Link
+                                href="../auth/studentsignup"
+                                className="cursor-pointer underline"
+                            >
+                                Sign up as Student
                             </Link>
                         </p>
                         <form onSubmit={handleSignup}>
@@ -227,15 +223,10 @@ const SignUp = () => {
                             <label className="block mt-6 primary-text-color">
                                 Profile picture
                             </label>
-                            <div>
-                                {" "}
+                            <div className="flex items-center signup-form-input">
                                 <input
-                                    className="signup-form-input"
-                                    placeholder="Last name"
                                     type="file"
                                     name="profilePicture"
-                                    id="last"
-                                    value={last}
                                     onChange={handleFileInputChange}
                                 />
                                 {photo && (
@@ -244,39 +235,71 @@ const SignUp = () => {
                                         className="cursor-pointer self-end"
                                     >
                                         <p className="text-xs text-red-500 text-center">
-                                            Remove
-                                            <br />
+                                            Remove <br />
                                             Image
                                         </p>
                                     </div>
                                 )}
                             </div>
 
-                            <label className="block mt-6 primary-text-color">
-                                Matric No.
-                            </label>
+                            {/* Staff ID */}
+                            <label className="block mt-6 primary-text-color">ID</label>
                             <input
                                 className="signup-form-input"
-                                placeholder="Matric No."
-                                name="matric"
+                                placeholder="Staff ID"
+                                name="id"
                                 type="text"
-                                value={matric}
+                                value={id}
                                 pattern="^[A-Z]{4}/[A-Z]{2,4}/\d{2}/\d{3}$"
                                 onChange={handleInputChange}
                             />
+
+                            {/* Faculty */}
+                            <label className="block mt-6 primary-text-color">Faculty</label>
+                            <select
+                                type="text"
+                                name="faculty"
+                                id="Faculty"
+                                placeholder="Faculty"
+                                className="signup-form-input"
+                                value={faculty}
+                                onChange={handleStaffSelectChange}
+                            >
+                                <option value="">Select Faculty</option>
+                                <option value="science">Science</option>
+                                <option value="famss">FAMSS</option>
+                                <option value="law">Law</option>
+                            </select>
+
+                            {/* Department */}
+                            <label className="block mt-6 primary-text-color">
+                                Department
+                            </label>
+                            <select
+                                type="text"
+                                name="department"
+                                id="Department"
+                                className="signup-form-input"
+                                value={department}
+                                onChange={handleStaffSelectChange}
+                            ></select>
+
                             <label className="block mt-6 primary-text-color">Email</label>
                             <input
                                 className="signup-form-input"
                                 placeholder="@example.com"
                                 type="text"
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                onChange={handleInputChange}
                             />
+
                             <label className="block mt-6 primary-text-color">Password</label>
                             <input
                                 className="signup-form-input"
                                 placeholder="Password"
                                 type="password"
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                onChange={handleInputChange}
                             />
                             <p className="mt-4 primary-text-color">
                                 Do not forget your password 🙏

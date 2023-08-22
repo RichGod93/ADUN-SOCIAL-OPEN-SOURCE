@@ -63,7 +63,7 @@ export function AuthProvider({ children }) {
     function logout() {
         signOut(auth).then(() => {
             localStorage.clear();
-            window.location.pathname = "/authentication";
+            window.location.pathname = "/auth/login";
         });
     }
 

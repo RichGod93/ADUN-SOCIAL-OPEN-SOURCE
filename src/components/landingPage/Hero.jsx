@@ -40,17 +40,26 @@ const Hero = () => {
                         </p>
                     </div>
 
-                    {/* Button */}
-                    <Link href="../auth">
-                        <motion.button
-                            className="primary-bg-color secondary-text-color font-bold text-xs mt-2 py-3 px-4 rounded-sm flex items-center justify-between uppercase"
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                        >
-                            Get Started
-                        </motion.button>
-                    </Link>
+                    <div className="flex flex-col items-center space-y-2 primary-text-color">
+                        {/* Button */}
+                        <Link href="../auth">
+                            <motion.button
+                                className="primary-bg-color secondary-text-color font-bold text-xs mt-2 py-3 px-4 rounded-sm flex items-center justify-between uppercase"
+                                whileHover={{ scale: 1.2 }}
+                                whileTap={{ scale: 0.9 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            >
+                                Get Started
+                            </motion.button>
+                        </Link>
+
+                        <p>or</p>
+
+                        <Link href="../auth/login" className="font-bold">
+                            Log In
+                        </Link>
+                    </div>
+
 
                 </motion.div>
             </div>

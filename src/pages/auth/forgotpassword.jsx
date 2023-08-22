@@ -35,7 +35,7 @@ const ForgotPassword = () => {
                         <h1 className="text-6xl primary-text-color font-bold">Forgot Password?</h1>
                         <p className="mt-4 primary-text-color">
                             Please enter your email address.{" "}
-                            <Link href="../auth" className="cursor-pointer underline">
+                            <Link href="../auth/login" className="cursor-pointer underline">
                                 Login
                             </Link>
                         </p>

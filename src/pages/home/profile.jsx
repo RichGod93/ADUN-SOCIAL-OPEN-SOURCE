@@ -1,132 +1,121 @@
 import { Button, HomeLayout, PageHead } from "@/components";
-import { useUpdateUserData } from "@/hooks/useUpdateUserData";
-import { useUserData } from "@/hooks/useUserData";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
-import React, { useEffect, useState } from "react";
-import { ID } from "appwrite";
-import { useProfilePicture } from "@/hooks/useProfilePicture";
+import { useAuth } from "@/context/AppContextProvider";
+import { collection, doc, getDoc } from "firebase/firestore";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { auth, db } from "../../../config/firebaseConfig";
+import { ToastContainer } from "react-toastify";
+
+
 
 const ProfilePage = () => {
-    const userData = useUserData();
-    const pictureUrl = useProfilePicture();
+    const { currentUser } = useAuth();
 
-    console.log(pictureUrl);
+    const [userType, setUserType] = useState("");
 
-    const [updateForm, setUpdateForm] = useState({
-        name: "",
-        email: "",
-        profilePicture: null,
-    });
+    const filepickerRef = useRef(null);
+    const [photo, setPhoto] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [photoURL, setPhotoURL] = useState("/avatar.png");
 
-    const controlUpdateForm = (event) => {
-        const { name, value } = event.target;
-
-        setUpdateForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    const handleImageChange = (event) => {
-        if (event.target.files) {
-            setUpdateForm({ ...updateForm, profilePicture: event.target.files[0] });
+    const handleChange = (e) => {
+        if (e.target.files[0]) {
+            setPhoto(e.target.files[0]);
         }
     };
-
-    const { updateUserData } = useUpdateUserData();
+    const handleClick = async () => {
+        const url = await upload(photo, currentUser, setLoading);
+        setPhotoURL(url);
+        removeImage();
+        if (url) {
+            toast.success("Profile picture uploaded");
+        } else {
+            toast.error("Upload failed, please try again");
+        }
+    };
 
     useEffect(() => {
-        if (!userData) return;
+        if (currentUser?.photoURL) {
+            setPhotoURL(currentUser.photoURL);
+        }
+    }, [currentUser]);
 
-        setUpdateForm({
-            name: userData.name,
-            email: userData.email,
-            profilePicture: userData.picture,
-        });
+    const removeImage = () => {
+        setPhoto(null);
+    };
+
+    useEffect(() => {
+        getDoc(doc(collection(db, "user_type"), auth.currentUser?.uid)).then(
+            (snapshot) => {
+                if (snapshot) {
+                    setUserType(snapshot.data());
+                }
+            }
+        );
     }, []);
-
-    const uploadProfilePicture = async () => {
-        const storage = appwrite.storage;
-        try {
-            const { $id } = await storage.createFile(
-                PROFILE_IMAGE_BUCKET_ID,
-                userData.$id,
-                updateForm.profilePicture
-            );
-            return $id;
-        } catch (error) {
-            console.log("Faild to upload profile picture: ", error);
-            throw error;
-        }
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (updateForm.profilePicture) {
-            await uploadProfilePicture()
-                .then(async () => {
-                    await updateUserData(updateForm);
-                    console.log("User data updated successfully");
-                })
-                .catch((error) => {
-                    // Handle error
-                    console.log(error);
-                });
-        } else {
-            await updateUserData(updateForm)
-                .then(() => {
-                    console.log("User data updated successfully");
-                })
-                .catch((error) => {
-                    // Handle error
-                    console.log(error);
-                });
-        }
-    };
 
     return (
         <>
             <PageHead title="ADUN Social" page_name="Profile" />
             <HomeLayout>
-                {/* {!pictureUrl ? (
-                ) : (
-                    <UserCircleIcon className="icon-medium primary-text-color" />
-                )} */}
-                <Image src={pictureUrl} alt="profile picture" width={200} height={200} />
+                <div className="flex flex-col justify-between px-2 space-y-3">
+                    <div className="flex flex-col items-center space-y-2">
+                        <div className="flex items-center">
+                            <Image
+                                src={photoURL}
+                                height={200}
+                                width={200}
+                                layout="fixed"
+                                objectFit="cover"
+                                alt="Profile Image"
+                                className="rounded-full border-2 border-gray-400"
+                            />
+                            <div className="flex flex-col">
+                                <div
+                                    className="flex items-center justify-center h-10 w-10 rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 cursor-pointer self-end"
+                                    onClick={() => filepickerRef.current.click()}
+                                >
+                                    {/* <AddAPhotoIcon /> */}
+                                    <input
+                                        ref={filepickerRef}
+                                        type="file"
+                                        onChange={handleChange}
+                                        hidden
+                                    />
+                                </div>
+                                {photo && (
+                                    <div
+                                        onClick={removeImage}
+                                        className="cursor-pointer self-end"
+                                    >
+                                        <p className="text-xs text-red-500 text-center">
+                                            Remove <br />
+                                            Image
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
 
-                <div>
-                    <h1>Edit Profile</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            value={updateForm.name}
-                            onChange={controlUpdateForm}
-                        />
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={updateForm.email}
-                            onChange={controlUpdateForm}
-                        />
-                        <label htmlFor="profilePicture">Profile Picture</label>
-                        <input
-                            type="file"
-                            id="profilePicture"
-                            onChange={handleImageChange}
-                        />
-                        <Button
-                            name={"Save Changes"}
-                            type={"submit"}
-                            className={
-                                "secondary-text-color flex items-center justify-center rounded-sm primary-bg-color p-2 font-bold uppercase tracking-widest hover:opacity-70"
-                            }
-                        />
-                    </form>
+                        <button
+                            disabled={loading || !photo}
+                            className="px-10 py-2 primary-bg-color dark:secondary-bg-color secondary-text-color dark:primary-text-color rounded-sm font-medium"
+                            onClick={handleClick}
+                        >
+                            Upload Profile Picture
+                        </button>
+                    </div>
+
+                    {currentUser?.admin ? (
+                        <div className="flex items-center justify-center">
+                            <p className="text-xs uppercase font-bold">{userType.type}</p>
+                        </div>
+                    ) : (
+                        <></>
+                    )}
+                    {/* {userType.type === "student" ? <StudentInfo /> : <StaffInfo />} */}
                 </div>
+                <ToastContainer />
             </HomeLayout>
         </>
     );
