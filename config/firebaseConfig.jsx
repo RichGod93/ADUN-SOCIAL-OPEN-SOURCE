@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
-import { getFunctions } from "firebase/functions";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,7 +24,6 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 const storage = getStorage(app);
-const functions = getFunctions();
 
 export function getFileExtension(file) {
   return file.name.substring(file.name.lastIndexOf("."));
@@ -53,4 +51,4 @@ export async function upload(file, currentUser, setLoading) {
   return url;
 }
 
-export { app, auth, db, storage, functions };
+export { app, auth, db, storage };

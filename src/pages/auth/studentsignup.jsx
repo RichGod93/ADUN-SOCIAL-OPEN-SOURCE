@@ -2,18 +2,19 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { setDoc, doc, collection, getDoc } from "firebase/firestore";
+import { setDoc, doc, collection, getDoc, Timestamp } from "firebase/firestore";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { PageHead } from "@/components";
 import { useAuth } from "@/context/AppContextProvider";
-import { auth, db } from "../../../config/firebaseConfig";
+import { auth, db, upload } from "../../../config/firebaseConfig";
 import useMounted from "@/hooks/useMounted";
+import { updateProfile } from "firebase/auth";
 
 const SignUp = () => {
-    const { signup } = useAuth();
+    const { signUp } = useAuth();
 
     const [photo, setPhoto] = useState(null);
     const [photoURL, setPhotoURL] = useState("/avatar.png");
@@ -143,7 +144,7 @@ const SignUp = () => {
 
         setIsSubmitting(isSubmitting, true);
 
-        await signup(email, password)
+        await signUp(email, password)
             .then(async () => {
                 await setDoc(
                     doc(userBioData, auth.currentUser.uid),
@@ -157,7 +158,7 @@ const SignUp = () => {
                         programme,
                         level,
                         email,
-                        createdAt: Timestamp.fromdate(new Date()),
+                        createdAt: Timestamp.fromDate(new Date()),
                     },
                     setDoc(doc(userType, auth.currentUser.uid), { type: "student" }),
                     setDoc(doc(userState, auth.currentUser.uid), {
@@ -244,15 +245,10 @@ const SignUp = () => {
                             <label className="block mt-6 primary-text-color">
                                 Profile picture
                             </label>
-                            <div>
-                                {" "}
+                            <div className="flex items-center signup-form-input">
                                 <input
-                                    className="signup-form-input"
-                                    placeholder="Last name"
                                     type="file"
                                     name="profilePicture"
-                                    id="last"
-                                    value={last}
                                     onChange={handleFileInputChange}
                                 />
                                 {photo && (
@@ -261,8 +257,7 @@ const SignUp = () => {
                                         className="cursor-pointer self-end"
                                     >
                                         <p className="text-xs text-red-500 text-center">
-                                            Remove
-                                            <br />
+                                            Remove <br />
                                             Image
                                         </p>
                                     </div>
@@ -324,8 +319,8 @@ const SignUp = () => {
                             <input
                                 className="signup-form-input"
                                 placeholder="Level"
-                                name="level"
                                 type="text"
+                                name="level"
                                 value={level}
                                 onChange={handleInputChange}
                             />
@@ -334,15 +329,19 @@ const SignUp = () => {
                             <input
                                 className="signup-form-input"
                                 placeholder="@example.com"
-                                type="text"
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="email"
+                                name="email"
+                                value={data.email}
+                                onChange={handleInputChange}
                             />
                             <label className="block mt-6 primary-text-color">Password</label>
                             <input
                                 className="signup-form-input"
                                 placeholder="Password"
                                 type="password"
-                                onChange={(e) => setPassword(e.target.value)}
+                                name="password"
+                                value={data.password}
+                                onChange={handleInputChange}
                             />
                             <p className="mt-4 primary-text-color">
                                 Do not forget your password 🙏
