@@ -23,6 +23,10 @@
     @apply h-32 w-32;
   }
 
+    .dark-mode {
+      @apply bg-[hsl(231,34%,11%)] dark:bg-[hsl(210,20%,98%)] text-[hsl(231,34%,11%)] dark:text-[hsl(210,20%,98%)];
+    }
+
   /* text colors */
   .primary-text-color {
     @apply text-[hsl(231,34%,11%)] dark:text-[hsl(210,20%,98%)];

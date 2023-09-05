@@ -288,7 +288,8 @@ const SignUp = () => {
                             <input
                                 className="signup-form-input"
                                 placeholder="@example.com"
-                                type="text"
+                                type="email"
+                                name="email"
                                 value={email}
                                 onChange={handleInputChange}
                             />
@@ -298,6 +299,7 @@ const SignUp = () => {
                                 className="signup-form-input"
                                 placeholder="Password"
                                 type="password"
+                                name="password"
                                 value={password}
                                 onChange={handleInputChange}
                             />

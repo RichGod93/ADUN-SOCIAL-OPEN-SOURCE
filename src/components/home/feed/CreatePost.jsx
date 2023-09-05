@@ -17,6 +17,7 @@ import { UserCircleIcon, PhotoIcon } from "@heroicons/react/24/solid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/context/AppContextProvider";
+import Link from "next/link";
 
 const CreatePost = () => {
     const filepickerRef = useRef(null);
@@ -134,17 +135,19 @@ const CreatePost = () => {
     return (
         <div className="flex secondary-bg-color border primary-border-round-color w-[300px] p-2 md:w-[600px] md:p-3 lg:w-[600px] lg:p-3 space-x-2">
             <div className="flex w-full space-x-3 p-1 justify-evenly">
-                {auth.currentUser?.photoURL ? (
-                    <Image
-                        className="rounded-full"
-                        src={auth.currentUser?.photoURL}
-                        width={50}
-                        height={50}
-                        alt=""
-                    />
-                ) : (
-                    <UserCircleIcon className="icon-small md:icon-medium lg:icon-medium primary-text-color" />
-                )}
+                <Link href="../home/profile">
+                    {auth.currentUser?.photoURL ? (
+                        <Image
+                            className="rounded-full"
+                            src={auth.currentUser?.photoURL}
+                            width={70}
+                            height={70}
+                            alt=""
+                        />
+                    ) : (
+                        <UserCircleIcon className="icon-small md:icon-medium lg:icon-medium primary-text-color" />
+                    )}
+                </Link>
                 <form className="flex-1" onSubmit={createNewPost}>
                     <div className="flex flex-col space-y-2">
                         <input

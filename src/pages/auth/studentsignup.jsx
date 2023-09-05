@@ -331,7 +331,7 @@ const SignUp = () => {
                                 placeholder="@example.com"
                                 type="email"
                                 name="email"
-                                value={data.email}
+                                value={email}
                                 onChange={handleInputChange}
                             />
                             <label className="block mt-6 primary-text-color">Password</label>
@@ -340,7 +340,7 @@ const SignUp = () => {
                                 placeholder="Password"
                                 type="password"
                                 name="password"
-                                value={data.password}
+                                value={password}
                                 onChange={handleInputChange}
                             />
                             <p className="mt-4 primary-text-color">

@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../config/firebaseConfig";
+import Image from "next/image";
 
 const NavBar = () => {
     const { logout } = useAuth();
@@ -24,7 +25,7 @@ const NavBar = () => {
     const handleLogout = async () => {
         try {
             logout;
-            router.push("../auth");
+            router.push("../auth/login");
             await updateDoc(doc(userState, auth.currentUser.uid), {
                 isOnline: false,
             });
@@ -58,8 +59,21 @@ const NavBar = () => {
                 </Link>
             </ul>
 
-            <div className="flex items-center space-x-1">
-                <UserCircleIcon className="hidden md:block lg:block icon-medium primary-text-color" />
+            <div className="flex items-center space-x-3">
+                <Link href="../home/profile">
+                    {auth.currentUser?.photoURL ? (
+                        <Image
+                            className="rounded-full"
+                            src={auth.currentUser?.photoURL}
+                            width={50}
+                            height={50}
+                            alt=""
+                        />
+                    ) : (
+                        <UserCircleIcon className="icon-small md:icon-medium lg:icon-medium primary-text-color" />
+                    )}
+                </Link>
+
                 <button
                     onClick={handleLogout}
                     className="hidden md:block lg:block w-full px-4 py-2 text-sm secondary-text-color primary-bg-color"

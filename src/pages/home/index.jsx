@@ -11,7 +11,7 @@ const HomePage = ({ posts }) => {
         <>
             <PageHead title="ADUN Social" page_name="Home" />
             <HomeLayout>
-                <div className="flex flex-col items-center">
+                <div className="h-screen flex flex-col items-center">
                     <div className="mt-3 space-y-5">
                         {/* create post component */}
                         <CreatePost />
