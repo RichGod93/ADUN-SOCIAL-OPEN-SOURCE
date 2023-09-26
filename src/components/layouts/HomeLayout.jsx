@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const HomeLayout = ({ children }) => {
     return (
-        <div className="h-full px-5 md:lg:px-10 flex flex-col bg-gradient-to-b light-gradient dark:dark-gradient">
+        <div className="min-h-screen h-full px-5 md:lg:px-10 flex flex-col bg-gradient-to-b light-gradient dark:dark-gradient">
             <NavBar />
             <div>{children}</div>
 

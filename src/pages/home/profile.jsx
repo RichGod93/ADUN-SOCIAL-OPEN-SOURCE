@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { auth, db } from "../../../config/firebaseConfig";
 import { ToastContainer } from "react-toastify";
-
-
+import PrivateRoute from "@/components/PrivateRoute";
 
 const ProfilePage = () => {
     const { currentUser } = useAuth();
@@ -53,16 +52,20 @@ const ProfilePage = () => {
             }
         );
     }, []);
+    console.log(photoURL);
 
     return (
-        <>
+        <PrivateRoute>
             <PageHead title="ADUN Social" page_name="Profile" />
             <HomeLayout>
-                <div className="h-screen flex flex-col justify-between px-2 space-y-3">
+                <div className="flex flex-col justify-between px-2 space-y-3">
                     <div className="flex flex-col items-center space-y-2">
                         <div className="flex items-center">
                             <Image
-                                src={photoURL}
+                                src={
+                                    photoURL ? photoURL :
+                                        "https://www.habeebat.com/wp-content/uploads/2016/08/dummy-prod-1.jpg"
+                                }
                                 height={200}
                                 width={200}
                                 layout="fixed"
@@ -117,7 +120,7 @@ const ProfilePage = () => {
                 </div>
                 <ToastContainer />
             </HomeLayout>
-        </>
+        </PrivateRoute>
     );
 };
 
