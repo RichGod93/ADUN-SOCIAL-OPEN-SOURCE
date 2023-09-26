@@ -32,10 +32,10 @@ const Login = () => {
 
     login(email, password)
       .then(async () => {
-        // updateDoc(doc(userState, auth.currentUser.uid), {
-        //   isOnline: true,
-        // });
         router.push("../home/");
+        updateDoc(doc(userState, auth.currentUser.uid), {
+          isOnline: true,
+        });
 
         //If an error occur when trying to submit, I will like to retain my current state, so user won't go through the stress of typing all the info that has already been inputed before.
         setEmail("");

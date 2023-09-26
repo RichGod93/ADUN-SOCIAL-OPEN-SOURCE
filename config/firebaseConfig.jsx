@@ -33,8 +33,8 @@ export async function upload(file, currentUser, setLoading) {
   const fileRef = ref(
     storage,
     `profile_images/${currentUser.uid}/` +
-      currentUser.uid +
-      getFileExtension(file)
+    currentUser.uid +
+    getFileExtension(file)
   );
 
   // console.log(fileRef);
