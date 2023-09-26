@@ -14,7 +14,7 @@ I'm still working on this README so there will be more information here about th
 - Landing page
 - Authentcation pages (Login/Sign up)
 - News Feed
-- Chats
+- Chats (Coming soon)
 - Profile page
 
 # Contributing to ADUN SOCIAL 🛠
