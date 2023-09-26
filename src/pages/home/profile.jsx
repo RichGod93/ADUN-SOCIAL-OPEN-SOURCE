@@ -3,9 +3,10 @@ import { useAuth } from "@/context/AppContextProvider";
 import { collection, doc, getDoc } from "firebase/firestore";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { auth, db } from "../../../config/firebaseConfig";
+import { auth, db, upload } from "../../../config/firebaseConfig";
 import { ToastContainer } from "react-toastify";
 import PrivateRoute from "@/components/PrivateRoute";
+import { PhotoIcon } from "@heroicons/react/24/solid";
 
 const ProfilePage = () => {
   const { currentUser } = useAuth();
@@ -44,7 +45,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getDoc(doc(collection(db, "user_type"), auth.currentUser?.uid)).then(
+    getDoc(doc(db, "user_type", auth.currentUser?.uid)).then(
       (snapshot) => {
         if (snapshot) {
           setUserType(snapshot.data());
@@ -52,7 +53,7 @@ const ProfilePage = () => {
       }
     );
   }, []);
-  console.log(photoURL)
+  // console.log(photoURL);
 
   return (
     <PrivateRoute>
@@ -64,7 +65,7 @@ const ProfilePage = () => {
               <Image
                 src={
                   photoURL ? photoURL :
-                  "https://www.habeebat.com/wp-content/uploads/2016/08/dummy-prod-1.jpg"
+                    "https://www.habeebat.com/wp-content/uploads/2016/08/dummy-prod-1.jpg"
                 }
                 height={200}
                 width={200}
@@ -75,10 +76,10 @@ const ProfilePage = () => {
               />
               <div className="flex flex-col">
                 <div
-                  className="flex items-center justify-center h-10 w-10 rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 cursor-pointer self-end"
+                  className="flex items-center justify-center p-2 h-10 w-10 rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 cursor-pointer self-end"
                   onClick={() => filepickerRef.current.click()}
                 >
-                  {/* <AddAPhotoIcon /> */}
+                  <PhotoIcon className="text-white" />
                   <input
                     ref={filepickerRef}
                     type="file"
@@ -102,20 +103,12 @@ const ProfilePage = () => {
 
             <button
               disabled={loading || !photo}
-              className="px-10 py-2 primary-bg-color dark:secondary-bg-color secondary-text-color dark:primary-text-color rounded-sm font-medium"
+              className="px-10 py-2 cursor-pointer primary-bg-color dark:secondary-bg-color secondary-text-color dark:primary-text-color rounded-sm font-medium"
               onClick={handleClick}
             >
               Upload Profile Picture
             </button>
           </div>
-
-          {currentUser?.admin ? (
-            <div className="flex items-center justify-center">
-              <p className="text-xs uppercase font-bold">{userType.type}</p>
-            </div>
-          ) : (
-            <></>
-          )}
           {/* {userType.type === "student" ? <StudentInfo /> : <StaffInfo />} */}
         </div>
         <ToastContainer />
