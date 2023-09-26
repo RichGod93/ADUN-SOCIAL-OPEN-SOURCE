@@ -15,7 +15,7 @@ const selectUserType = () => {
                         </h1>
                         <div className="flex flex-wrap items-center justify-center w-full space-x-5">
                             <Link href="../auth/staffsignup">
-                                <div className="lg:w-48 lg:h-48 md:w-40 md:h-40 w-36 h-36 flex flex-col items-center justify-center rounded-full primary-bg-color shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
+                                <div className="lg:w-48 lg:h-48 md:w-40 md:h-40 w-36 h-36 flex flex-col items-center justify-center rounded-full primary-bg-color shadow-md hover:shadow-lg transition-transform transform hover:scale-105 text-white">
                                     <Image
                                         src="/static/teacher.png"
                                         width={100}
@@ -27,7 +27,7 @@ const selectUserType = () => {
                             </Link>
 
                             <Link href="../auth/studentsignup">
-                                <div className="lg:w-48 lg:h-48 md:w-40 md:h-40 w-36 h-36 flex flex-col items-center justify-center rounded-full primary-bg-color shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
+                                <div className="lg:w-48 lg:h-48 md:w-40 md:h-40 w-36 h-36 flex flex-col items-center justify-center rounded-full primary-bg-color shadow-md hover:shadow-lg transition-transform transform hover:scale-105 text-white">
                                     <Image
                                         src="/static/student.png"
                                         width={100}

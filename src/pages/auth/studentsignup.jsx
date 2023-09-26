@@ -111,11 +111,15 @@ const SignUp = () => {
     };
 
     const handleInputChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        // setData({ ...data, [e.target.name]: e.target.value });
+        // This will ensure that you're working with the latest state when updating.
+        setData((prevData)=> ({...prevData, [e.target.name]: e.target.value}))
     };
 
     const handleStudentSelectChange = async (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        // setData({ ...data, [e.target.name]: e.target.value });
+        // This will ensure that you're working with the latest state when updating.
+        setData((prevData)=> ({...prevData, [e.target.name]: e.target.value}))
         if (e.target.name === "faculty") {
             getSelectOptions(userFacultyCol, e, "departments", "Department");
         } else if (e.target.name === "department") {
@@ -170,6 +174,22 @@ const SignUp = () => {
 
                 toast.success("Verification email sent!");
                 router.push("../home");
+
+                //If an error occur when trying to submit, I will like to retain my current state, so user won't go through the stress of typing all the info that has already been inputed before
+
+                setData({
+                    first: "",
+                    last: "",
+                    matric: "",
+                    faculty: "",
+                    department: "",
+                    programme: "",
+                    level: "",
+                    email: "",
+                    password: "",
+                    error: null,
+                    loading: false,
+                });
             })
             .catch((err) => {
                 console.log(err.message);
@@ -179,19 +199,7 @@ const SignUp = () => {
                     mounted.current && setIsSubmitting(false);
                 };
             });
-        setData({
-            first: "",
-            last: "",
-            matric: "",
-            faculty: "",
-            department: "",
-            programme: "",
-            level: "",
-            email: "",
-            password: "",
-            error: null,
-            loading: false,
-        });
+        
     };
 
     return (
