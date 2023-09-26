@@ -45,7 +45,7 @@ Please take a moment to review this document for important information about the
 We want to ensure a positive and respectful environment for all contributors. Please read and adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 <a name="getting-started"></a>
-## Getting Started
+## Getting Started 🎬
 
 <a name="forking-the-repository"></a>
 ### Forking the Repository
@@ -63,9 +63,21 @@ git clone https://github.com/<your-username>/ADUN-SOCIAL-OPEN-SOURCE.git
 
 <a name="setting-up-the-development-environment"></a>
 ### Setting Up the Development Environment
+After cloning your forked repository, do the following:
 
 - Install [dependencies](#link-to-dependency-setup-documentation) required for the project.
 - Follow the setup instructions in [README.md](README.md) to configure your environment.
+- Run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 <a name="making-changes"></a>
 ## Making Changes
@@ -123,18 +135,3 @@ By contributing to this project, you agree that your contributions will be licen
 ---
 
 Thank you for your interest in improving ADUN SOCIAL. We appreciate your contributions and look forward to collaborating with you!
-
-## 🎬 Getting Started
-
-## Setting up Next.js
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
