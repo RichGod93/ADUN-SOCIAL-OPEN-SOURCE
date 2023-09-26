@@ -48,9 +48,9 @@ const NavBar = () => {
                 >
                     <HomeIcon className="icon-small primary-text-color" />
                 </Link>
-                <li className="py-3 px-5 cursor-pointer hover:border-b-2 hover:primary-border-color">
+                {/* <li className="py-3 px-5 cursor-pointer hover:border-b-2 hover:primary-border-color">
                     <ChatBubbleLeftRightIcon className="icon-small primary-text-color" />
-                </li>
+                </li> */}
                 <Link
                     href="../home/profile"
                     className="py-3 px-5 cursor-pointer hover:border-b-2 hover:primary-border-color"

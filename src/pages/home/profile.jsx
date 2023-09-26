@@ -58,7 +58,7 @@ const ProfilePage = () => {
         <>
             <PageHead title="ADUN Social" page_name="Profile" />
             <HomeLayout>
-                <div className="flex flex-col justify-between px-2 space-y-3">
+                <div className="h-screen flex flex-col justify-between px-2 space-y-3">
                     <div className="flex flex-col items-center space-y-2">
                         <div className="flex items-center">
                             <Image
